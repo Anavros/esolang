@@ -3,6 +3,10 @@
 ======================
 A small program interpreter for a simple two-dimensional language.
 
+:Todo:
+-> Add '><v^' direction operators.
+-> Add support for an explicit start point.
+
 :Concept:
 There is a single stack, to chars can be pushed.
 

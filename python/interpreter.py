@@ -2,6 +2,7 @@
 import actions
 from structures import Code, State
 import time
+from string import ascii_lowercase
 
 delay = 0.01
 
@@ -9,7 +10,7 @@ mappings = {
     '\\':actions.bflip,
     '/': actions.fflip,
     '!': actions.show,
-    '#': actions.empty,
+    '#': actions.clear,
     "'": actions.pop,
     '@': actions.get_input,
     '*': actions.skip,
@@ -22,20 +23,21 @@ def execute(code, debug=False):
         if debug:
             input()
             print('\n'*50)
-            print("Stack:", ''.join(state.stack))
-            print("Skipping:", state.skip)
+            print("Stack", repr(state.stack))
             code.display()
         time.sleep(delay)
-        if state.skip:
-            state.skip = False
-            continue
         if c == '"':
             state.quoted = not state.quoted
             continue
+
         if state.quoted:
-            state.stack.append(c)
+            state.stack.push(c)
+
         else:
             if c in ' .':
+                continue
+            if c in ascii_lowercase:
+                state.stack.switch(c)
                 continue
             try:
                 mappings[c](code, state)

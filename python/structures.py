@@ -1,4 +1,6 @@
 
+from string import ascii_lowercase
+
 class Code:
     def __init__(self, filename):
         self.x = 0
@@ -44,6 +46,42 @@ class Code:
 
 class State:
     def __init__(self):
-        self.stack = []
         self.quoted = False
-        self.skip = False
+        self.stack = Switch()
+
+
+class Switch:
+    def __init__(self):
+        self.i = 'a'
+        self.registers = {l:list() for l in ascii_lowercase}
+
+    def __repr__(self):
+        return self.i.upper() + ': ' + ''.join(self.registers[self.i])
+
+    def __str__(self):
+        return ''.join(self.registers[self.i])
+
+    def switch(self, char):
+        self.i = char
+
+    def empty(self):
+        return bool(len(self.registers[self.i]) > 0)
+
+    def push(self, value):
+        self.registers[self.i].append(value)
+
+    def extend(self, value):
+        self.registers[self.i].extend(value)
+
+    def peek(self):
+        if len(self.registers[self.i]) > 0:
+            return self.registers[self.i][-1]
+        else:
+            return ''
+
+    def pop(self):
+        if len(self.registers[self.i]) > 0:
+            self.registers.pop()
+
+    def clear(self):
+        self.registers[self.i] = []

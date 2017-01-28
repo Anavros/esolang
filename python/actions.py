@@ -1,18 +1,16 @@
 
 
-def empty(code, state):
-    state.stack = []
+def clear(code, state):
+    state.stack.clear()
 
 def pop(code, state):
-    if state.stack:
-        state.stack.pop()
+    state.stack.pop()
 
 def show(code, state):
-    print(''.join(state.stack))
+    print(str(state.stack))
 
 def peek(code, state):
-    if state.stack:
-        print(state.stack[-1])
+    print(state.peek())
 
 def bflip(code, state):
     change = { 'up':'left', 'down':'right', 'left':'up', 'right':'down' }
@@ -23,13 +21,13 @@ def fflip(code, state):
     code.d = change[code.d]
 
 def skip(code, state):
-    state.skip = True
+    code.step()
 
 def skip_if_stack(code, state):
-    if len(state.stack) < 1:
-        state.skip = True
+    if not state.stack.empty():
+        code.step()
 
 def get_input(code, state):
     txt = input("> ").strip()
     if txt:
-        state.stack.append(txt)
+        state.stack.push(txt)
