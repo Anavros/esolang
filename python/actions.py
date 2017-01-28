@@ -1,40 +1,35 @@
 
 
-def dump_stack(code, state):
-    print(''.join(state.stack))
+def empty(code, state):
     state.stack = []
 
+def pop(code, state):
+    if state.stack:
+        state.stack.pop()
 
-def flip_back(code, state):
-    """
-    Redirect code execution using a backslash mirror \ .
-    """
-    change = {
-        'up':'left',
-        'down':'right',
-        'left':'up',
-        'right':'down',
-    }
-    if state.active:
-        code.d = change[code.d]
+def show(code, state):
+    print(''.join(state.stack))
 
+def peek(code, state):
+    if state.stack:
+        print(state.stack[-1])
 
-def flip_forward(code, state):
-    """
-    Redirect code execution using a forward slash mirror / .
-    """
-    change = {
-        'up':'right',
-        'down':'left',
-        'left':'down',
-        'right':'up',
-    }
-    if state.active:
-        code.d = change[code.d]
+def bflip(code, state):
+    change = { 'up':'left', 'down':'right', 'left':'up', 'right':'down' }
+    code.d = change[code.d]
 
+def fflip(code, state):
+    change = { 'up':'right', 'down':'left', 'left':'down', 'right':'up' }
+    code.d = change[code.d]
 
-def toggle_junctions(code, state):
-    """
-    Activate or deactivate junctions.
-    """
-    state.active = not state.active
+def skip(code, state):
+    state.skip = True
+
+def skip_if_stack(code, state):
+    if len(state.stack) < 1:
+        state.skip = True
+
+def get_input(code, state):
+    txt = input("> ").strip()
+    if txt:
+        state.stack.append(txt)

@@ -35,9 +35,15 @@ class Code:
                 break
             self.step()
 
+    def display(self):
+        mut = [list(s) for s in self.lines[:]]
+        mut[self.y][self.x] = '∎'
+        for array in mut:
+            print(''.join(array), end='')
+
 
 class State:
     def __init__(self):
         self.stack = []
         self.quoted = False
-        self.active = True
+        self.skip = False
