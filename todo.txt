@@ -1,0 +1,19 @@
+
+2D Esolang Interpreter
+======================
+A small program interpreter for a simple two-dimensional language.
+
+:Concept:
+There is a single stack, to chars can be pushed.
+
+Execution stops when the code pointer hits any edge of the file.
+
+:Commands:
+'<' Redirect execution left.
+'>' Redirect execution right.
+'\' Mirror execution.
+'/' Mirror execution.
+'!' Print stack contents onto the screen. Empties the stack.
+
+:Data:
+Any characters between two double quotes are pushed onto the stack.
